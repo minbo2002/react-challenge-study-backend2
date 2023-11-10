@@ -11,6 +11,7 @@ public enum ResponseCode {
 
     INVALID_REQUEST(400, "잘못된 요청입니다."),
     NO_TARGET_BOARD(404, "해당하는 게시판이 없습니다."),
+    NO_TARGET_COMMENT(404, "해당하는 댓글이 없습니다."),
 
     INTERNAL_SERVER_ERROR(500, "서버에 오류가 발생했습니다."),
     ;

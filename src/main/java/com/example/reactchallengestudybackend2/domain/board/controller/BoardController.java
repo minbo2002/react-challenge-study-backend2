@@ -63,7 +63,7 @@ public class BoardController {
 
     // 게시판 삭제
     @DeleteMapping("/{id}")
-    void deleteBoard(@PathVariable Long id) {
+    public void deleteBoard(@PathVariable Long id) {
 
         boardService.deleteBoard(id);
     }

@@ -61,7 +61,7 @@ public class BoardServiceImpl implements BoardService {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new CustomApiException(ResponseCode.NO_TARGET_BOARD));
 
-        board.update(requestDto.getTitle(), requestDto.getContent());
+        board.update(requestDto);
 
         return BoardResponse.toDto(board);
     }
