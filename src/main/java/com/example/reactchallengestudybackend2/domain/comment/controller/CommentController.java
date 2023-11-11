@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -26,6 +28,15 @@ public class CommentController {
         CommentResponse comment = commentService.createComment(boardId, requestDto);
 
         return new ResponseEntity<>(comment, HttpStatus.CREATED);
+    }
+
+    // 특정 게시판에 포함된 댓글 리스트 조회
+    @GetMapping("/board/{boardId}/list")
+    public ResponseEntity<List<CommentResponse>> getCommentList(@PathVariable Long boardId) {
+
+        List<CommentResponse> commentList = commentService.getCommentList(boardId);
+
+        return new ResponseEntity<>(commentList, HttpStatus.OK);
     }
 
     // 댓글 조회

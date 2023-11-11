@@ -4,10 +4,15 @@ import com.example.reactchallengestudybackend2.domain.comment.dto.request.Commen
 import com.example.reactchallengestudybackend2.domain.comment.dto.request.CommentUpdateRequestDto;
 import com.example.reactchallengestudybackend2.domain.comment.dto.response.CommentResponse;
 
+import java.util.List;
+
 public interface CommentService {
 
     // 댓글 생성
     CommentResponse createComment(Long boardId, CommentCreateRequestDto requestDto);
+
+    // 특정 게시판에 포함된 댓글 리스트 조회
+    List<CommentResponse> getCommentList(Long boardId);
 
     // 댓글 조회
     CommentResponse getComment(Long id);

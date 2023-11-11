@@ -14,6 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -40,6 +43,18 @@ public class CommentServiceImpl implements CommentService{
         Comment saveComment = commentRepository.save(comment);
 
         return CommentResponse.toDto(saveComment);
+    }
+
+    // 특정 게시판에 포함된 댓글 리스트 조회
+    @Override
+    public List<CommentResponse> getCommentList(Long boardId) {
+
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new CustomApiException(ResponseCode.NO_TARGET_BOARD));
+
+        return board.getComments().stream()
+                .map(CommentResponse::toDto)
+                .collect(Collectors.toList());
     }
 
     // 댓글 조회

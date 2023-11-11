@@ -1,6 +1,5 @@
 package com.example.reactchallengestudybackend2.domain.comment.dto.request;
 
-import com.example.reactchallengestudybackend2.domain.comment.entity.Comment;
 import lombok.*;
 
 @Getter
