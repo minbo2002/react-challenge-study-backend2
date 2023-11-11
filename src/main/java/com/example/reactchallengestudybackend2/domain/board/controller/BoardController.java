@@ -1,9 +1,13 @@
 package com.example.reactchallengestudybackend2.domain.board.controller;
 
+import com.example.reactchallengestudybackend2.common.exception.CustomApiException;
+import com.example.reactchallengestudybackend2.common.exception.ResponseCode;
 import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardCreateRequestDto;
 import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpdateRequestDto;
 import com.example.reactchallengestudybackend2.domain.board.dto.response.BoardResponse;
+import com.example.reactchallengestudybackend2.domain.board.entity.Board;
 import com.example.reactchallengestudybackend2.domain.board.service.BoardService;
+import com.example.reactchallengestudybackend2.domain.comment.dto.response.CommentResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -13,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -66,5 +72,14 @@ public class BoardController {
     public void deleteBoard(@PathVariable Long id) {
 
         boardService.deleteBoard(id);
+    }
+
+    // 게시판 리스트 조회 fetchjoin 테스트
+    @GetMapping("/list/fetchjoin")
+    public ResponseEntity<List<BoardResponse>> getBoardListWithComment() {
+
+        List<BoardResponse> boardList = boardService.getBoardListWithComment();
+
+        return new ResponseEntity<>(boardList, HttpStatus.OK);
     }
 }

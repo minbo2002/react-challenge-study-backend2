@@ -29,7 +29,6 @@ public class Board extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    @BatchSize(size = 10)
     @OneToMany(mappedBy = "board")
     private List<Comment> comments;
 

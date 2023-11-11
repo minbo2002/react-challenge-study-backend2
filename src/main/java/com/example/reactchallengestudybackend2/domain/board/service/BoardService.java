@@ -6,6 +6,8 @@ import com.example.reactchallengestudybackend2.domain.board.dto.response.BoardRe
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface BoardService {
 
     // 게시판 생성
@@ -22,4 +24,7 @@ public interface BoardService {
 
     // 게시판 삭제
     void deleteBoard(Long id);
+
+    // 게시판 리스트 fetchjoin 조회
+    List<BoardResponse> getBoardListWithComment();
 }

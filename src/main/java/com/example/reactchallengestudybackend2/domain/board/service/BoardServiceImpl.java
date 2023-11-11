@@ -14,6 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -75,5 +78,16 @@ public class BoardServiceImpl implements BoardService {
                 .orElseThrow(() -> new CustomApiException(ResponseCode.NO_TARGET_BOARD));
 
         boardRepository.delete(board);
+    }
+
+    // fetch join 테스트
+    @Override
+    public List<BoardResponse> getBoardListWithComment() {
+
+        List<Board> boardWithComment = boardRepository.findBoardWithComment();
+
+        return boardWithComment.stream()
+                .map(BoardResponse::toDto)
+                .collect(Collectors.toList());
     }
 }
