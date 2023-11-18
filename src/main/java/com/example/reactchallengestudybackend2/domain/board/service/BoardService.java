@@ -13,6 +13,9 @@ public interface BoardService {
     // 게시판 생성
     BoardResponse createBoard(BoardCreateRequestDto requestDto);
 
+    // 게시판 리스트 조회
+    List<BoardResponse> getBoards();
+
     // 게시판 리스트 조회(페이징, 검색)
     Page<BoardResponse> getBoardList(Pageable pageable, String title, String content);
 

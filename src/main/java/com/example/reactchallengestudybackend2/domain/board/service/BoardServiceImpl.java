@@ -35,6 +35,17 @@ public class BoardServiceImpl implements BoardService {
         return BoardResponse.toDto(saveBoard);
     }
 
+    // 게시판 리스트 조회
+    @Override
+    public List<BoardResponse> getBoards() {
+
+        List<Board> boards = boardRepository.findAll();
+
+        return boards.stream()
+                .map(BoardResponse::toDto)
+                .collect(Collectors.toList());
+    }
+
     // 게시판 리스트 조회(페이징, 검색)
     @Override
     public Page<BoardResponse> getBoardList(Pageable pageable, String title, String content) {
