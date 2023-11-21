@@ -11,7 +11,7 @@ import java.util.List;
 public interface BoardService {
 
     // 게시판 생성
-    BoardResponse createBoard(BoardCreateRequestDto requestDto);
+    BoardResponse createBoard(BoardCreateRequestDto requestDto, String userEmail);
 
     // 게시판 리스트 조회
     List<BoardResponse> getBoards();

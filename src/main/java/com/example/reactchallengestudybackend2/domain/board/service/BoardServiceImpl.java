@@ -7,6 +7,8 @@ import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpd
 import com.example.reactchallengestudybackend2.domain.board.dto.response.BoardResponse;
 import com.example.reactchallengestudybackend2.domain.board.entity.Board;
 import com.example.reactchallengestudybackend2.domain.board.repository.BoardRepository;
+import com.example.reactchallengestudybackend2.domain.user.entity.User;
+import com.example.reactchallengestudybackend2.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,13 +26,21 @@ import java.util.stream.Collectors;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
 
     // 게시판 생성
     @Transactional
     @Override
-    public BoardResponse createBoard(BoardCreateRequestDto requestDto) {
+    public BoardResponse createBoard(BoardCreateRequestDto requestDto, String userEmail) {
 
-        Board saveBoard = boardRepository.save(requestDto.toEntity());
+        Board board = requestDto.toEntity();
+
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new CustomApiException(ResponseCode.USER_NOT_FOUND));
+
+        board.setUser(user);
+
+        Board saveBoard = boardRepository.save(board);
 
         return BoardResponse.toDto(saveBoard);
     }
@@ -69,7 +79,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardResponse updateBoard(Long id, BoardUpdateRequestDto requestDto) {
 
-        log.info("updateBoard id : {}", id);
+        log.info("boardId : {}", id);
         log.info("requestDto : {}", requestDto);
 
         Board board = boardRepository.findById(id)

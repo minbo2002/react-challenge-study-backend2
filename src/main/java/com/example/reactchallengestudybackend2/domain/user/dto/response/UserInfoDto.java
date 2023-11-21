@@ -4,10 +4,8 @@ import com.example.reactchallengestudybackend2.domain.user.entity.Role;
 import com.example.reactchallengestudybackend2.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Getter

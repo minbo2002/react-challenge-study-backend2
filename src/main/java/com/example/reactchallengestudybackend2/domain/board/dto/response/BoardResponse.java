@@ -16,6 +16,7 @@ public class BoardResponse {
     private final Long id;
     private final String title;
     private final String content;
+    private final Long userId;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private final LocalDateTime createdAt;
@@ -28,6 +29,7 @@ public class BoardResponse {
                 .id(board.getId())
                 .title(board.getTitle())
                 .content(board.getContent())
+                .userId(board.getUser().getId())
                 .createdAt(board.getCreatedAt())
                 .modifiedAt(board.getModifiedAt())
                 .build();

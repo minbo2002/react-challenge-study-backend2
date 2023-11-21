@@ -1,5 +1,6 @@
 package com.example.reactchallengestudybackend2.domain.board.controller;
 
+import com.example.reactchallengestudybackend2.common.security.dto.PrincipalDetails;
 import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardCreateRequestDto;
 import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpdateRequestDto;
 import com.example.reactchallengestudybackend2.domain.board.dto.response.BoardResponse;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,9 +28,14 @@ public class BoardController {
 
     // 게시판 생성
     @PostMapping("")
-    public ResponseEntity<BoardResponse> createBoard(@RequestBody @Valid BoardCreateRequestDto requestDto) {
+    public ResponseEntity<BoardResponse> createBoard(@RequestBody @Valid BoardCreateRequestDto requestDto,
+                                                     @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        BoardResponse createBoard = boardService.createBoard(requestDto);
+        log.info("requestDto: {}", requestDto);
+        log.info("user email: {}", principalDetails.getUser().getEmail());
+        String userEmail = principalDetails.getUser().getEmail();
+
+        BoardResponse createBoard = boardService.createBoard(requestDto, userEmail);
 
         return new ResponseEntity<>(createBoard, HttpStatus.CREATED);
     }
@@ -53,7 +60,7 @@ public class BoardController {
         return new ResponseEntity<>(boardList, HttpStatus.OK);
     }
 
-    // 게시판 조회
+    // 게시판 상세조회
     @GetMapping("/{id}")
     public ResponseEntity<BoardResponse> getBoard(@PathVariable Long id) {
 
