@@ -2,7 +2,7 @@ package com.example.reactchallengestudybackend2.domain.comment.entity;
 
 import com.example.reactchallengestudybackend2.common.BaseTimeEntity;
 import com.example.reactchallengestudybackend2.domain.board.entity.Board;
-import com.example.reactchallengestudybackend2.domain.comment.dto.request.CommentUpdateRequestDto;
+import com.example.reactchallengestudybackend2.domain.comment.dto.request.CommentUpdateDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class Comment extends BaseTimeEntity {
         this.board = board;
     }
 
-    public void update(CommentUpdateRequestDto requestDto) {
+    public void update(CommentUpdateDto requestDto) {
         this.writer = requestDto.getWriter();
         this.content = requestDto.getContent();
     }

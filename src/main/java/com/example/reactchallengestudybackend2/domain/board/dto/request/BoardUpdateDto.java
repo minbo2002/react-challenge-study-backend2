@@ -6,13 +6,13 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-public class BoardUpdateRequestDto {
+public class BoardUpdateDto {
 
     private String title;
     private String content;
 
     @Builder
-    public BoardUpdateRequestDto(String title, String content) {
+    public BoardUpdateDto(String title, String content) {
         this.title = title;
         this.content = content;
     }

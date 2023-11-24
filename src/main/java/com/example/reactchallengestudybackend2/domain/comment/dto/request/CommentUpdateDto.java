@@ -6,13 +6,13 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-public class CommentUpdateRequestDto {
+public class CommentUpdateDto {
 
     private String writer;
     private String content;
 
     @Builder
-    public CommentUpdateRequestDto(String writer, String content) {
+    public CommentUpdateDto(String writer, String content) {
         this.writer = writer;
         this.content = content;
     }

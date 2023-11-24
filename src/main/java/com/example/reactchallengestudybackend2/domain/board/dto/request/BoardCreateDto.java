@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @ToString
-public class BoardCreateRequestDto {
+public class BoardCreateDto {
 
     @NotBlank(message = "제목을 입력해주세요.")
     private String title;
@@ -18,7 +18,7 @@ public class BoardCreateRequestDto {
     private String content;
 
     @Builder
-    public BoardCreateRequestDto(String title, String content) {
+    public BoardCreateDto(String title, String content) {
         this.title = title;
         this.content = content;
     }

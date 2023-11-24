@@ -1,7 +1,7 @@
 package com.example.reactchallengestudybackend2.domain.board.service;
 
-import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardCreateRequestDto;
-import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpdateRequestDto;
+import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardCreateDto;
+import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpdateDto;
 import com.example.reactchallengestudybackend2.domain.board.dto.response.BoardResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +11,7 @@ import java.util.List;
 public interface BoardService {
 
     // 게시판 생성
-    BoardResponse createBoard(BoardCreateRequestDto requestDto, String userEmail);
+    BoardResponse createBoard(BoardCreateDto requestDto, String userEmail);
 
     // 게시판 리스트 조회
     List<BoardResponse> getBoards();
@@ -23,7 +23,7 @@ public interface BoardService {
     BoardResponse getBoard(Long id);
 
     // 게시판 수정
-    BoardResponse updateBoard(Long id, BoardUpdateRequestDto requestDto);
+    BoardResponse updateBoard(Long id, BoardUpdateDto requestDto);
 
     // 게시판 삭제
     void deleteBoard(Long id);

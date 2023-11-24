@@ -1,7 +1,7 @@
 package com.example.reactchallengestudybackend2.domain.comment.controller;
 
-import com.example.reactchallengestudybackend2.domain.comment.dto.request.CommentCreateRequestDto;
-import com.example.reactchallengestudybackend2.domain.comment.dto.request.CommentUpdateRequestDto;
+import com.example.reactchallengestudybackend2.domain.comment.dto.request.CommentCreateDto;
+import com.example.reactchallengestudybackend2.domain.comment.dto.request.CommentUpdateDto;
 import com.example.reactchallengestudybackend2.domain.comment.dto.response.CommentResponse;
 import com.example.reactchallengestudybackend2.domain.comment.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class CommentController {
     // 댓글 생성
     @PostMapping("/{boardId}")
     public ResponseEntity<CommentResponse> createComment(@PathVariable() Long boardId,
-                                                         @RequestBody CommentCreateRequestDto requestDto) {
+                                                         @RequestBody CommentCreateDto requestDto) {
 
         CommentResponse comment = commentService.createComment(boardId, requestDto);
 
@@ -51,7 +51,7 @@ public class CommentController {
     // 댓글 수정
     @PatchMapping("/{id}")
     public ResponseEntity<CommentResponse> updateComment(@PathVariable Long id,
-                                                         @RequestBody CommentUpdateRequestDto requestDto) {
+                                                         @RequestBody CommentUpdateDto requestDto) {
 
         CommentResponse comment = commentService.updateComment(id, requestDto);
 

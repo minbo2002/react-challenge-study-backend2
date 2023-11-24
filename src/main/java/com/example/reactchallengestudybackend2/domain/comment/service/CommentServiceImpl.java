@@ -4,8 +4,8 @@ import com.example.reactchallengestudybackend2.common.exception.CustomApiExcepti
 import com.example.reactchallengestudybackend2.common.exception.ResponseCode;
 import com.example.reactchallengestudybackend2.domain.board.entity.Board;
 import com.example.reactchallengestudybackend2.domain.board.repository.BoardRepository;
-import com.example.reactchallengestudybackend2.domain.comment.dto.request.CommentCreateRequestDto;
-import com.example.reactchallengestudybackend2.domain.comment.dto.request.CommentUpdateRequestDto;
+import com.example.reactchallengestudybackend2.domain.comment.dto.request.CommentCreateDto;
+import com.example.reactchallengestudybackend2.domain.comment.dto.request.CommentUpdateDto;
 import com.example.reactchallengestudybackend2.domain.comment.dto.response.CommentResponse;
 import com.example.reactchallengestudybackend2.domain.comment.entity.Comment;
 import com.example.reactchallengestudybackend2.domain.comment.repository.CommentRepository;
@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService{
     // 댓글 생성
     @Transactional
     @Override
-    public CommentResponse createComment(Long boardId, CommentCreateRequestDto requestDto) {
+    public CommentResponse createComment(Long boardId, CommentCreateDto requestDto) {
 
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new CustomApiException(ResponseCode.NO_TARGET_BOARD));
@@ -70,7 +70,7 @@ public class CommentServiceImpl implements CommentService{
     // 댓글 수정
     @Transactional
     @Override
-    public CommentResponse updateComment(Long id, CommentUpdateRequestDto requestDto) {
+    public CommentResponse updateComment(Long id, CommentUpdateDto requestDto) {
 
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new CustomApiException(ResponseCode.NO_TARGET_COMMENT));

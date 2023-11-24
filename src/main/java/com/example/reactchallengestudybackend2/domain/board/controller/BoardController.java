@@ -1,8 +1,8 @@
 package com.example.reactchallengestudybackend2.domain.board.controller;
 
 import com.example.reactchallengestudybackend2.common.security.dto.PrincipalDetails;
-import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardCreateRequestDto;
-import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpdateRequestDto;
+import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardCreateDto;
+import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpdateDto;
 import com.example.reactchallengestudybackend2.domain.board.dto.response.BoardResponse;
 import com.example.reactchallengestudybackend2.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class BoardController {
 
     // 게시판 생성
     @PostMapping("")
-    public ResponseEntity<BoardResponse> createBoard(@RequestBody @Valid BoardCreateRequestDto requestDto,
+    public ResponseEntity<BoardResponse> createBoard(@RequestBody @Valid BoardCreateDto requestDto,
                                                      @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
         log.info("requestDto: {}", requestDto);
@@ -72,7 +72,7 @@ public class BoardController {
     // 게시판 수정
     @PatchMapping("/{id}")
     public ResponseEntity<BoardResponse> updateBoard(@PathVariable Long id,
-                                                     @RequestBody BoardUpdateRequestDto requestDto) {
+                                                     @RequestBody BoardUpdateDto requestDto) {
 
         BoardResponse updateBoard = boardService.updateBoard(id, requestDto);
 

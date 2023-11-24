@@ -2,8 +2,8 @@ package com.example.reactchallengestudybackend2.domain.board.service;
 
 import com.example.reactchallengestudybackend2.common.exception.CustomApiException;
 import com.example.reactchallengestudybackend2.common.exception.ResponseCode;
-import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardCreateRequestDto;
-import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpdateRequestDto;
+import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardCreateDto;
+import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpdateDto;
 import com.example.reactchallengestudybackend2.domain.board.dto.response.BoardResponse;
 import com.example.reactchallengestudybackend2.domain.board.entity.Board;
 import com.example.reactchallengestudybackend2.domain.board.repository.BoardRepository;
@@ -31,7 +31,7 @@ public class BoardServiceImpl implements BoardService {
     // 게시판 생성
     @Transactional
     @Override
-    public BoardResponse createBoard(BoardCreateRequestDto requestDto, String userEmail) {
+    public BoardResponse createBoard(BoardCreateDto requestDto, String userEmail) {
 
         Board board = requestDto.toEntity();
 
@@ -77,7 +77,7 @@ public class BoardServiceImpl implements BoardService {
     // 게시판 수정
     @Transactional
     @Override
-    public BoardResponse updateBoard(Long id, BoardUpdateRequestDto requestDto) {
+    public BoardResponse updateBoard(Long id, BoardUpdateDto requestDto) {
 
         log.info("boardId : {}", id);
         log.info("requestDto : {}", requestDto);

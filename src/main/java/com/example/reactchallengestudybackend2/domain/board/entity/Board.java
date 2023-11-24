@@ -1,7 +1,7 @@
 package com.example.reactchallengestudybackend2.domain.board.entity;
 
 import com.example.reactchallengestudybackend2.common.BaseTimeEntity;
-import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpdateRequestDto;
+import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpdateDto;
 import com.example.reactchallengestudybackend2.domain.comment.entity.Comment;
 import com.example.reactchallengestudybackend2.domain.user.entity.User;
 import lombok.AccessLevel;
@@ -44,7 +44,7 @@ public class Board extends BaseTimeEntity {
         this.user = user;
     }
 
-    public void update(BoardUpdateRequestDto requestDto) {
+    public void update(BoardUpdateDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
     }
