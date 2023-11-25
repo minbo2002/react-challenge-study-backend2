@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/board/**").permitAll()
                 .antMatchers("/api/comment/**").permitAll()
                 .antMatchers("/api/user/**").permitAll()
+                .antMatchers("/api/category/**").permitAll()
 //                .antMatchers(HttpMethod.GET, "/api/items/**").permitAll()
 //                .antMatchers(HttpMethod.DELETE, "/api/items/**").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated();
