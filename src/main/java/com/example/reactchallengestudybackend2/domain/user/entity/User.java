@@ -12,7 +12,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "users")
-@ToString(exclude = {"roles"})  // 양방향 매핑에서 무한루프에 의한 StackOverflowError 방지를 위해 멤버변수인 roles를 @ToString에서 제외
+@ToString(exclude = {"roles", "boards"})  // 양방향 매핑에서 무한루프에 의한 StackOverflowError 방지를 위해 멤버변수인 roles, boards를 @ToString에서 제외
 public class User extends BaseTimeEntity {
 
     @Id
@@ -38,8 +38,11 @@ public class User extends BaseTimeEntity {
         USER, ADMIN
     }
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER , cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user")
     private List<Board> boards;
+
+//    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Board> boards;
 
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Token> tokens;
