@@ -17,14 +17,22 @@ public class BoardCreateDto {
     @NotBlank(message = "내용을 입력해주세요.")
     private String content;
 
+    private Long categoryId;
+
     @Builder
     public BoardCreateDto(String title, String content) {
         this.title = title;
         this.content = content;
     }
 
-    public Board toEntity() {
+    @Builder
+    public BoardCreateDto(String title, String content, Long categoryId) {
+        this.title = title;
+        this.content = content;
+        this.categoryId = categoryId;
+    }
 
+    public Board toEntity() {
         return Board.builder()
                 .title(title)
                 .content(content)

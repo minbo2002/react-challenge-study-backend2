@@ -2,12 +2,10 @@ package com.example.reactchallengestudybackend2.domain.board.entity;
 
 import com.example.reactchallengestudybackend2.common.BaseTimeEntity;
 import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpdateDto;
+import com.example.reactchallengestudybackend2.domain.category.entity.CategoryBridge;
 import com.example.reactchallengestudybackend2.domain.comment.entity.Comment;
 import com.example.reactchallengestudybackend2.domain.user.entity.User;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,6 +14,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "boards")
+@ToString(exclude = {"user", "comments", "categoryBridges"})
 public class Board extends BaseTimeEntity {
 
     @Id
@@ -35,6 +34,9 @@ public class Board extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "board")
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "board")
+    private List<CategoryBridge> categoryBridges;
 
     @Builder
     public Board(Long id, String title, String content, User user) {

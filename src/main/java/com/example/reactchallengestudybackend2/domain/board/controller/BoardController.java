@@ -2,6 +2,7 @@ package com.example.reactchallengestudybackend2.domain.board.controller;
 
 import com.example.reactchallengestudybackend2.common.security.dto.PrincipalDetails;
 import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardCreateDto;
+import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardSearchDto;
 import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpdateDto;
 import com.example.reactchallengestudybackend2.domain.board.dto.response.BoardResponse;
 import com.example.reactchallengestudybackend2.domain.board.service.BoardService;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -40,7 +42,7 @@ public class BoardController {
         return new ResponseEntity<>(createBoard, HttpStatus.CREATED);
     }
 
-    // 게시판 리스트 조회
+    // 게시판 전체 리스트
     @GetMapping("/list")
     public ResponseEntity<List<BoardResponse>> getBoardList() {
 
@@ -49,13 +51,23 @@ public class BoardController {
         return new ResponseEntity<>(boardList, HttpStatus.OK);
     }
 
-    // 게시판 리스트 조회(페이징, 검색)
+    // 게시판 리스트(페이징, 검색)
     @GetMapping("/list/paging")
     public ResponseEntity<Page<BoardResponse>> getBoardList(Pageable pageable,
                                                             @RequestParam(required = false) String title,
                                                             @RequestParam(required = false) String content) {
 
         Page<BoardResponse> boardList = boardService.getBoardList(pageable, title, content);
+
+        return new ResponseEntity<>(boardList, HttpStatus.OK);
+    }
+
+    // 게시판 리스트 Querydsl (페이징, 검색)
+    @GetMapping("/list/querydsl")
+    public ResponseEntity<Page<BoardResponse>> getBoardList(@PageableDefault(page = 0, size = 10) Pageable pageable,
+                                                            @Valid BoardSearchDto searchDto) {
+
+        Page<BoardResponse> boardList = boardService.getBoardList(pageable, searchDto);
 
         return new ResponseEntity<>(boardList, HttpStatus.OK);
     }
@@ -86,7 +98,7 @@ public class BoardController {
         boardService.deleteBoard(id);
     }
 
-    // 게시판 리스트 조회 fetchjoin 테스트
+    // 게시판 리스트 fetchjoin 테스트
     @GetMapping("/list/fetchjoin")
     public ResponseEntity<List<BoardResponse>> getBoardListWithComment() {
 

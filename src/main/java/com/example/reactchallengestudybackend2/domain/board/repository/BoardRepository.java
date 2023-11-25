@@ -9,7 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BoardRepository extends JpaRepository<Board, Long> {
+public interface BoardRepository extends JpaRepository<Board, Long>,
+                                         BoardRepositoryCustom {
 
     // 게시판 리스트 조회(페이징, 검색)
     @Query("select b from Board b where b.title like %:title% and b.content like %:content% order by b.id desc")

@@ -3,10 +3,15 @@ package com.example.reactchallengestudybackend2.domain.board.service;
 import com.example.reactchallengestudybackend2.common.exception.CustomApiException;
 import com.example.reactchallengestudybackend2.common.exception.ResponseCode;
 import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardCreateDto;
+import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardSearchDto;
 import com.example.reactchallengestudybackend2.domain.board.dto.request.BoardUpdateDto;
 import com.example.reactchallengestudybackend2.domain.board.dto.response.BoardResponse;
 import com.example.reactchallengestudybackend2.domain.board.entity.Board;
 import com.example.reactchallengestudybackend2.domain.board.repository.BoardRepository;
+import com.example.reactchallengestudybackend2.domain.category.entity.Category;
+import com.example.reactchallengestudybackend2.domain.category.entity.CategoryBridge;
+import com.example.reactchallengestudybackend2.domain.category.repository.CategoryBridgeRepository;
+import com.example.reactchallengestudybackend2.domain.category.repository.CategoryRepository;
 import com.example.reactchallengestudybackend2.domain.user.entity.User;
 import com.example.reactchallengestudybackend2.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +32,8 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
+    private final CategoryBridgeRepository categoryBridgeRepository;
 
     // 게시판 생성
     @Transactional
@@ -41,6 +48,11 @@ public class BoardServiceImpl implements BoardService {
         board.setUser(user);
 
         Board saveBoard = boardRepository.save(board);
+
+        // 카테고리 브릿지 생성
+        Category category = categoryRepository.findById(requestDto.getCategoryId())
+                .orElseThrow(() -> new CustomApiException(ResponseCode.NO_TARGET_CATEGORY));
+        categoryBridgeRepository.save(CategoryBridge.of(saveBoard, category));
 
         return BoardResponse.toDto(saveBoard);
     }
@@ -64,7 +76,15 @@ public class BoardServiceImpl implements BoardService {
                 .map(BoardResponse::toDto);
     }
 
-    // 게시판 조회
+    // 게시판 리스트 조회 Querydsl (페이징, 검색)
+    @Override
+    public Page<BoardResponse> getBoardList(Pageable pageable, BoardSearchDto searchDto) {
+
+        return boardRepository.getBoards(pageable, searchDto)
+                .map(BoardResponse::toDto);
+    }
+
+    // 게시판 상세조회
     @Override
     public BoardResponse getBoard(Long id) {
 
