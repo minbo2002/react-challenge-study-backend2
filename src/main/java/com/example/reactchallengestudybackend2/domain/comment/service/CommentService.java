@@ -9,7 +9,7 @@ import java.util.List;
 public interface CommentService {
 
     // 댓글 생성
-    CommentResponse createComment(Long boardId, CommentCreateDto requestDto);
+    CommentResponse createComment(Long boardId, CommentCreateDto requestDto, String writer);
 
     // 특정 게시판에 포함된 댓글 리스트 조회
     List<CommentResponse> getCommentList(Long boardId);

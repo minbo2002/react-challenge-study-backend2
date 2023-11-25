@@ -29,13 +29,13 @@ public class CommentServiceImpl implements CommentService{
     // 댓글 생성
     @Transactional
     @Override
-    public CommentResponse createComment(Long boardId, CommentCreateDto requestDto) {
+    public CommentResponse createComment(Long boardId, CommentCreateDto requestDto, String writer) {
 
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new CustomApiException(ResponseCode.NO_TARGET_BOARD));
 
         Comment comment = Comment.builder()
-                .writer(requestDto.getWriter())
+                .writer(writer)
                 .content(requestDto.getContent())
                 .board(board)
                 .build();

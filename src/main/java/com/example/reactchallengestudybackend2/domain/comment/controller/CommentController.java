@@ -1,5 +1,6 @@
 package com.example.reactchallengestudybackend2.domain.comment.controller;
 
+import com.example.reactchallengestudybackend2.common.security.dto.PrincipalDetails;
 import com.example.reactchallengestudybackend2.domain.comment.dto.request.CommentCreateDto;
 import com.example.reactchallengestudybackend2.domain.comment.dto.request.CommentUpdateDto;
 import com.example.reactchallengestudybackend2.domain.comment.dto.response.CommentResponse;
@@ -8,8 +9,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,14 +26,20 @@ public class CommentController {
     // 댓글 생성
     @PostMapping("/{boardId}")
     public ResponseEntity<CommentResponse> createComment(@PathVariable() Long boardId,
-                                                         @RequestBody CommentCreateDto requestDto) {
+                                                         @RequestBody @Valid CommentCreateDto requestDto,
+                                                         @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        CommentResponse comment = commentService.createComment(boardId, requestDto);
+        log.info("boardId: {}", boardId);
+        log.info("requestDto: {}", requestDto);
+        log.info("user name: {}", principalDetails.getUser().getName());
+        String writer = principalDetails.getUser().getName();
+
+        CommentResponse comment = commentService.createComment(boardId, requestDto, writer);
 
         return new ResponseEntity<>(comment, HttpStatus.CREATED);
     }
 
-    // 특정 게시판에 포함된 댓글 리스트 조회
+    // 특정 게시판에 포함된 댓글 리스트
     @GetMapping("/board/{boardId}/list")
     public ResponseEntity<List<CommentResponse>> getCommentList(@PathVariable Long boardId) {
 
