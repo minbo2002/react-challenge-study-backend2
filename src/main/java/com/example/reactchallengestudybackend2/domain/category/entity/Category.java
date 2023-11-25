@@ -20,6 +20,7 @@ public class Category extends BaseTimeEntity {
     @Column(name = "category_id")
     private Long id;
 
+    @Column(name = "category_name", nullable = false)
     private String categoryName;
 
     @Enumerated(EnumType.STRING)

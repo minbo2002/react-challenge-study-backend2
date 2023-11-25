@@ -25,6 +25,7 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
 
         List<Board> boards = queryFactory
                 .selectFrom(board)
+                .leftJoin(board.categoryBridges).fetchJoin()
                 .where(eqTitle(searchDto.getTitle()),
                        eqContent(searchDto.getContent()))
                 .offset(pageable.getOffset())
